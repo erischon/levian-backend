@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev index.ts"
+    "dev": "ts-node-dev server/server.ts"
   },
   "keywords": [],
   "author": "Eri Schön",
