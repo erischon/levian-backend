@@ -5,6 +5,8 @@ import {
   VerifyCallback,
 } from "passport-google-oauth20";
 
+import { UserModel } from "../user";
+
 // Create a Passport middleware to authenticate with a Google Strategy
 const passportGoogle = () => {
   passport.use(
@@ -20,9 +22,7 @@ const passportGoogle = () => {
         profile: Profile,
         done: VerifyCallback
       ) => {
-        console.log("Access Token: ", accessToken);
-        console.log("Refresh Token: ", refreshToken);
-        console.log("Profile: ", profile);
+        new UserModel({ googleId: profile.id }).save();
       }
     )
   );

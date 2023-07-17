@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 
 import { passportGoogle, authRoutes } from "./api/auth";
+import { connectDB } from "./services";
 
 const PORT: number = 3456;
 
@@ -10,6 +11,9 @@ dotenv.config();
 
 // Create express app
 const app: Application = express();
+
+// Connect to database
+connectDB();
 
 // Register middlewares
 authRoutes(app);
@@ -22,5 +26,5 @@ app.get("/", (req: Request, res: Response) => {
 
 // Launch app
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}!`);
+  console.log(`Server listening (on port ${PORT}).`);
 });
