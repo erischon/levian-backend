@@ -1,8 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 
-import passportGoogle from "./api/auth/auth.services";
-import authRoutes from "./api/auth/auth.routes";
+import { passportGoogle, authRoutes } from "./api/auth";
 
 const PORT: number = 3456;
 
