@@ -33,9 +33,9 @@ app.use(passport.session());
 app.use(passport.initialize());
 
 connectDB(); // Connect to database
+passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
-passportGoogle(); // Register passport google strategy
 
 // Launch app
 app.listen(PORT, () => {
