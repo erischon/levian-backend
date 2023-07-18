@@ -1,8 +1,10 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "passport";
 
-import { passportGoogle, authRoutes } from "./api/auth";
-import { UserModel } from "./api/user";
+import { authRoutes, userRoutes } from "./routes";
+import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
 const PORT: number = 3456;
@@ -13,20 +15,27 @@ dotenv.config();
 // Create express app
 const app: Application = express();
 
-// Connect to database
-connectDB();
+// Session configuration
+app.use(
+  session({
+    secret: [process.env.SESSION_SECRET as string],
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+      secure: false, // set to true if your using https
+    },
+  })
+);
 
-// Register models
-UserModel;
+// Passport middleware
+app.use(passport.session());
+app.use(passport.initialize());
 
-// Register middlewares
-authRoutes(app);
-passportGoogle();
-
-// Register a route
-app.get("/", (req: Request, res: Response) => {
-  res.send("Bienvenue sur Levian !");
-});
+connectDB(); // Connect to database
+authRoutes(app); // Register auth routes
+userRoutes(app); // Register user routes
+passportGoogle(); // Register passport google strategy
 
 // Launch app
 app.listen(PORT, () => {

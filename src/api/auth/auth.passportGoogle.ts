@@ -16,6 +16,7 @@ passport.serializeUser((user: any, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await UserModel.findById(id);
+
     done(null, user);
   } catch (error) {
     console.log(error);
@@ -38,8 +39,6 @@ const passportGoogle = () => {
         done: VerifyCallback
       ) => {
         const existingUser = await UserModel.findOne({ googleId: profile.id });
-
-        console.log("passport", passport);
 
         existingUser
           ? done(null, existingUser)
