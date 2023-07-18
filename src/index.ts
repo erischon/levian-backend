@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
 
-import { authRoutes, userRoutes } from "./routes";
+import { authRoutes, userRoutes, getProjectsRouter } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
@@ -36,6 +36,8 @@ connectDB(); // Connect to database
 passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
+
+app.get("/api/projects", getProjectsRouter);
 
 // Launch app
 app.listen(PORT, () => {
