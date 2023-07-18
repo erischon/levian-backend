@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 
 import { passportGoogle, authRoutes } from "./api/auth";
+import { UserModel } from "./api/user";
 import { connectDB } from "./services";
 
 const PORT: number = 3456;
@@ -14,6 +15,9 @@ const app: Application = express();
 
 // Connect to database
 connectDB();
+
+// Register models
+UserModel;
 
 // Register middlewares
 authRoutes(app);
