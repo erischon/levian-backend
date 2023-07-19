@@ -2,8 +2,15 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
+import bodyParser from "body-parser";
 
-import { authRoutes, userRoutes, getProjectsRouter } from "./routes";
+import {
+  authRoutes,
+  userRoutes,
+  getProjectsRouter,
+  getProjectByIdRouter,
+  createProjectRouter,
+} from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
@@ -29,6 +36,7 @@ app.use(
 );
 
 // Passport middleware
+app.use(bodyParser.json());
 app.use(passport.session());
 app.use(passport.initialize());
 
@@ -37,7 +45,9 @@ passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
 
+app.post("/api/projects", createProjectRouter);
 app.get("/api/projects", getProjectsRouter);
+app.get("/api/projects/:id", getProjectByIdRouter);
 
 // Launch app
 app.listen(PORT, () => {

@@ -2,14 +2,10 @@ import mongoose from "mongoose";
 
 // Define a schema for a project
 const ProjectSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   client: {
     type: String,
@@ -21,7 +17,6 @@ const ProjectSchema = new mongoose.Schema({
   },
   endDate: {
     type: Date,
-    required: true,
   },
   status: {
     type: String,
@@ -38,11 +33,6 @@ const ProjectSchema = new mongoose.Schema({
 
 // Define a schema for a task
 const TaskSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
@@ -67,6 +57,10 @@ const TaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   timeLogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -77,11 +71,6 @@ const TaskSchema = new mongoose.Schema({
 
 // Define a schema for TimeLog
 const TimeLogSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   date: {
     type: Date,
     required: true,

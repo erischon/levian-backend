@@ -1,4 +1,15 @@
 import { projectModel, taskModel, timeLogModel } from "./project.models";
-import { getProjectsRouter } from "./project.routes";
+import {
+  getProjectsRouter,
+  getProjectByIdRouter,
+  createProjectRouter,
+} from "./project.routes";
 
-export { projectModel, taskModel, timeLogModel, getProjectsRouter };
+export {
+  projectModel,
+  taskModel,
+  timeLogModel,
+  getProjectsRouter,
+  getProjectByIdRouter,
+  createProjectRouter,
+};
