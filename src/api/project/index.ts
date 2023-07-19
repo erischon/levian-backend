@@ -1,4 +1,15 @@
 import { projectModel, taskModel, timeLogModel } from "./project.models";
-import { projectHandlers, taskHandlers } from "./project.routes";
+import {
+  projectHandlers,
+  taskHandlers,
+  timeLogHandlers,
+} from "./project.routes";
 
-export { projectModel, taskModel, timeLogModel, projectHandlers, taskHandlers };
+export {
+  projectModel,
+  taskModel,
+  timeLogModel,
+  projectHandlers,
+  taskHandlers,
+  timeLogHandlers,
+};

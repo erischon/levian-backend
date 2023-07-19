@@ -8,7 +8,7 @@ import { authRoutes, userRoutes } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
-import { projectHandlers, taskHandlers } from "./api/project";
+import { projectHandlers, taskHandlers, timeLogHandlers } from "./api/project";
 
 const PORT: number = 3456;
 
@@ -49,7 +49,18 @@ app.put("/api/projects/:id", projectHandlers.updateProject);
 app.delete("/api/projects/:id", projectHandlers.deleteProject);
 
 // Task routes
+app.get("/api/tasks", taskHandlers.getTasks);
+app.get("/api/tasks/:id", taskHandlers.getTaskById);
 app.post("/api/tasks", taskHandlers.createTask);
+app.put("/api/tasks/:id", taskHandlers.updateTask);
+app.delete("/api/tasks/:id", taskHandlers.deleteTask);
+
+// Time Log routes
+app.get("/api/timelogs", timeLogHandlers.getTimeLogs);
+app.get("/api/timelogs/:id", timeLogHandlers.getTimeLogById);
+app.post("/api/timelogs", timeLogHandlers.createTimeLog);
+app.put("/api/timelogs/:id", timeLogHandlers.updateTimeLog);
+app.delete("/api/timelogs/:id", timeLogHandlers.deleteTimeLog);
 
 // Launch app
 app.listen(PORT, () => {

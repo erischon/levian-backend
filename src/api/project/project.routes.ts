@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { projectModel, taskModel } from "../project";
+import { projectModel, taskModel, timeLogModel } from "../project";
 
 const projectHandlers = {
   createProject: async (req: Request, res: Response) => {
@@ -67,26 +67,100 @@ const taskHandlers = {
       res.status(400).send(err.message);
     }
   },
+  getTasks: async (req: Request, res: Response) => {
+    try {
+      const tasks = await taskModel.find();
+
+      res.status(200).json(tasks);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getTaskById: async (req: Request, res: Response) => {
+    try {
+      const task = await taskModel.findById(req.params.id);
+
+      res.status(200).json(task);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  updateTask: async (req: Request, res: Response) => {
+    try {
+      const task = await taskModel.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+
+      res.status(200).json(task);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  deleteTask: async (req: Request, res: Response) => {
+    try {
+      await taskModel.findByIdAndDelete(req.params.id);
+
+      res.status(200).send("Task deleted");
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
 };
 
-// Get all tasks for a project
+const timeLogHandlers = {
+  createTimeLog: async (req: Request, res: Response) => {
+    try {
+      const timeLog = await timeLogModel.create(req.body);
 
-// Get a task by id
+      res.status(201).json(timeLog);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getTimeLogs: async (req: Request, res: Response) => {
+    try {
+      const timeLogs = await timeLogModel.find();
 
-// Create a new task
+      res.status(200).json(timeLogs);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getTimeLogById: async (req: Request, res: Response) => {
+    try {
+      const timeLog = await timeLogModel.findById(req.params.id);
 
-// Update a task
+      res.status(200).json(timeLog);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  updateTimeLog: async (req: Request, res: Response) => {
+    try {
+      const timeLog = await timeLogModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
 
-// Delete a task
+      res.status(200).json(timeLog);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  deleteTimeLog: async (req: Request, res: Response) => {
+    try {
+      await timeLogModel.findByIdAndDelete(req.params.id);
 
-// Get all time logs for a task
+      res.status(200).send("Time log deleted");
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+};
 
-// Get a time log by id
-
-// Create a new time log
-
-// Update a time log
-
-// Delete a time log
-
-export { projectHandlers, taskHandlers };
+export { projectHandlers, taskHandlers, timeLogHandlers };
