@@ -4,19 +4,11 @@ import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
 
-import {
-  authRoutes,
-  userRoutes,
-  getProjectsRouter,
-  getProjectByIdRouter,
-  createProjectRouter,
-  updateProjectRouter,
-  deleteProjectRouter,
-} from "./routes";
+import { authRoutes, userRoutes } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
-import { projectHandlers } from "./api/project/project.routes";
+import { projectHandlers } from "./api/project";
 
 const PORT: number = 3456;
 
@@ -49,12 +41,12 @@ passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
 
+// Project routes
+app.get("/api/projects", projectHandlers.getProjects);
+app.get("/api/projects/:id", projectHandlers.getProjectById);
 app.post("/api/projects", projectHandlers.createProject);
-app.put("/api/projects/:id", updateProjectRouter);
-app.delete("/api/projects/:id", deleteProjectRouter);
-
-app.get("/api/projects", getProjectsRouter);
-app.get("/api/projects/:id", getProjectByIdRouter);
+app.put("/api/projects/:id", projectHandlers.updateProject);
+app.delete("/api/projects/:id", projectHandlers.deleteProject);
 
 // Launch app
 app.listen(PORT, () => {

@@ -1,8 +1,6 @@
-import { Router, Request, Response } from "express";
+import { Request, Response } from "express";
 
-import { projectModel } from "../project";
-
-const router = Router();
+import { projectModel, taskModel } from "../project";
 
 const projectHandlers = {
   createProject: async (req: Request, res: Response) => {
@@ -59,6 +57,18 @@ const projectHandlers = {
   },
 };
 
+const taskHandlers = {
+  createTask: async (req: Request, res: Response) => {
+    try {
+      const task = await taskModel.create(req.body);
+
+      res.status(201).json(task);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+};
+
 // Get all tasks for a project
 
 // Get a task by id
@@ -80,24 +90,3 @@ const projectHandlers = {
 // Delete a time log
 
 export { projectHandlers };
-
-export const createProjectRouter = router.post(
-  "/api/projects",
-  projectHandlers.createProject
-);
-export const updateProjectRouter = router.put(
-  "/api/projects/:id",
-  projectHandlers.updateProject
-);
-export const deleteProjectRouter = router.delete(
-  "/api/projects/:id",
-  projectHandlers.deleteProject
-);
-export const getProjectsRouter = router.get(
-  "/api/projects",
-  projectHandlers.getProjects
-);
-export const getProjectByIdRouter = router.get(
-  "/api/projects/:id",
-  projectHandlers.getProjectById
-);
