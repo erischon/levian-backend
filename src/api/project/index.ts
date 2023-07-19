@@ -3,6 +3,8 @@ import {
   getProjectsRouter,
   getProjectByIdRouter,
   createProjectRouter,
+  updateProjectRouter,
+  deleteProjectRouter,
 } from "./project.routes";
 
 export {
@@ -12,4 +14,6 @@ export {
   getProjectsRouter,
   getProjectByIdRouter,
   createProjectRouter,
+  updateProjectRouter,
+  deleteProjectRouter,
 };

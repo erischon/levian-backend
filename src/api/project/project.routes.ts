@@ -4,42 +4,60 @@ import { projectModel } from "../project";
 
 const router = Router();
 
-// Create a new project
-const createProject = async (req: Request, res: Response) => {
-  try {
-    const project = await projectModel.create(req.body);
+const projectHandlers = {
+  createProject: async (req: Request, res: Response) => {
+    try {
+      const project = await projectModel.create(req.body);
 
-    res.status(201).json(project);
-  } catch (err: any) {
-    res.status(400).send(err.message);
-  }
+      res.status(201).json(project);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getProjects: async (req: Request, res: Response) => {
+    const projects = await projectModel.find();
+
+    if (projects.length === 0) {
+      res.status(404).send("No projects found");
+    } else {
+      res.status(200).json(projects);
+    }
+  },
+  getProjectById: async (req: Request, res: Response) => {
+    try {
+      const project = await projectModel.findById(req.params.id);
+
+      res.status(200).json(project);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  updateProject: async (req: Request, res: Response) => {
+    try {
+      const project = await projectModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      res.status(200).json(project);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  deleteProject: async (req: Request, res: Response) => {
+    try {
+      await projectModel.findByIdAndDelete(req.params.id);
+
+      res.status(200).send("Project deleted");
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
 };
-
-// Get all projects
-const getProjects = async (req: Request, res: Response) => {
-  const projects = await projectModel.find();
-
-  if (projects.length === 0) {
-    res.status(404).send("No projects found");
-  } else {
-    res.status(200).json(projects);
-  }
-};
-
-// Get a project by id
-const getProjectById = async (req: Request, res: Response) => {
-  const project = await projectModel.findById(req.params.id);
-
-  if (!project) {
-    res.status(404).send("No project found");
-  } else {
-    res.status(200).json(project);
-  }
-};
-
-// Update a project
-
-// Delete a project
 
 // Get all tasks for a project
 
@@ -61,9 +79,25 @@ const getProjectById = async (req: Request, res: Response) => {
 
 // Delete a time log
 
-export const createProjectRouter = router.post("/api/projects", createProject);
-export const getProjectsRouter = router.get("/api/projects", getProjects);
+export { projectHandlers };
+
+export const createProjectRouter = router.post(
+  "/api/projects",
+  projectHandlers.createProject
+);
+export const updateProjectRouter = router.put(
+  "/api/projects/:id",
+  projectHandlers.updateProject
+);
+export const deleteProjectRouter = router.delete(
+  "/api/projects/:id",
+  projectHandlers.deleteProject
+);
+export const getProjectsRouter = router.get(
+  "/api/projects",
+  projectHandlers.getProjects
+);
 export const getProjectByIdRouter = router.get(
   "/api/projects/:id",
-  getProjectById
+  projectHandlers.getProjectById
 );

@@ -4,6 +4,8 @@ import {
   getProjectsRouter,
   getProjectByIdRouter,
   createProjectRouter,
+  updateProjectRouter,
+  deleteProjectRouter,
 } from "./api/project";
 
 export {
@@ -12,4 +14,6 @@ export {
   getProjectsRouter,
   getProjectByIdRouter,
   createProjectRouter,
+  updateProjectRouter,
+  deleteProjectRouter,
 };
