@@ -89,4 +89,4 @@ const taskHandlers = {
 
 // Delete a time log
 
-export { projectHandlers };
+export { projectHandlers, taskHandlers };

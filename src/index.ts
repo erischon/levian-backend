@@ -8,7 +8,7 @@ import { authRoutes, userRoutes } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
-import { projectHandlers } from "./api/project";
+import { projectHandlers, taskHandlers } from "./api/project";
 
 const PORT: number = 3456;
 
@@ -47,6 +47,9 @@ app.get("/api/projects/:id", projectHandlers.getProjectById);
 app.post("/api/projects", projectHandlers.createProject);
 app.put("/api/projects/:id", projectHandlers.updateProject);
 app.delete("/api/projects/:id", projectHandlers.deleteProject);
+
+// Task routes
+app.post("/api/tasks", taskHandlers.createTask);
 
 // Launch app
 app.listen(PORT, () => {
