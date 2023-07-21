@@ -1,14 +1,42 @@
 import mongoose from "mongoose";
 
+// Define a schema for a customer
+const CustomerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  projects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+    },
+  ],
+});
+
 // Define a schema for a project
 const ProjectSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   name: {
     type: String,
     required: true,
     unique: true,
   },
   client: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Customer",
     required: true,
   },
   startDate: {
@@ -84,8 +112,9 @@ const TimeLogSchema = new mongoose.Schema({
   },
 });
 
+const customerModel = mongoose.model("Customer", CustomerSchema);
 const projectModel = mongoose.model("Project", ProjectSchema);
 const taskModel = mongoose.model("Task", TaskSchema);
 const timeLogModel = mongoose.model("TimeLog", TimeLogSchema);
 
-export { projectModel, taskModel, timeLogModel };
+export { customerModel, projectModel, taskModel, timeLogModel };

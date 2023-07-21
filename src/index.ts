@@ -3,12 +3,18 @@ import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import { authRoutes, userRoutes } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
-import { projectHandlers, taskHandlers, timeLogHandlers } from "./api/project";
+import {
+  projectHandlers,
+  taskHandlers,
+  timeLogHandlers,
+  customerHandlers,
+} from "./api/project";
 
 const PORT: number = 3456;
 
@@ -36,6 +42,13 @@ app.use(bodyParser.json());
 app.use(passport.session());
 app.use(passport.initialize());
 
+// CORS configuration
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+
 connectDB(); // Connect to database
 passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
@@ -47,6 +60,13 @@ app.get("/api/projects/:id", projectHandlers.getProjectById);
 app.post("/api/projects", projectHandlers.createProject);
 app.put("/api/projects/:id", projectHandlers.updateProject);
 app.delete("/api/projects/:id", projectHandlers.deleteProject);
+
+// Customer routes
+app.get("/api/customers", customerHandlers.getCustomers);
+app.get("/api/customers/:id", customerHandlers.getCustomerById);
+app.post("/api/customers", customerHandlers.createCustomer);
+app.put("/api/customers/:id", customerHandlers.updateCustomer);
+app.delete("/api/customers/:id", customerHandlers.deleteCustomer);
 
 // Task routes
 app.get("/api/tasks", taskHandlers.getTasks);

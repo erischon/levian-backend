@@ -1,6 +1,66 @@
 import { Request, Response } from "express";
 
-import { projectModel, taskModel, timeLogModel } from "../project";
+import {
+  projectModel,
+  taskModel,
+  timeLogModel,
+  customerModel,
+} from "../project";
+
+const customerHandlers = {
+  createCustomer: async (req: Request, res: Response) => {
+    try {
+      const customer = await customerModel.create(req.body);
+
+      res.status(201).json(customer);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getCustomers: async (req: Request, res: Response) => {
+    try {
+      const customers = await customerModel.find();
+
+      res.status(200).json(customers);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  getCustomerById: async (req: Request, res: Response) => {
+    try {
+      const customer = await customerModel.findById(req.params.id);
+
+      res.status(200).json(customer);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  updateCustomer: async (req: Request, res: Response) => {
+    try {
+      const customer = await customerModel.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      res.status(200).json(customer);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+  deleteCustomer: async (req: Request, res: Response) => {
+    try {
+      await customerModel.findByIdAndDelete(req.params.id);
+
+      res.status(200).send("Customer deleted");
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
+};
 
 const projectHandlers = {
   createProject: async (req: Request, res: Response) => {
@@ -163,4 +223,4 @@ const timeLogHandlers = {
   },
 };
 
-export { projectHandlers, taskHandlers, timeLogHandlers };
+export { projectHandlers, taskHandlers, timeLogHandlers, customerHandlers };
