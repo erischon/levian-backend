@@ -85,9 +85,8 @@ const projectHandlers = {
     try {
       const project = await projectModel.findById(req.params.id);
 
-      // Populate customer and tasks
+      // Populate
       await project?.populate("customer");
-      await project?.populate("tasks");
 
       res.status(200).json(project);
     } catch (err: any) {
@@ -126,11 +125,6 @@ const taskHandlers = {
     try {
       const task = await taskModel.create(req.body);
 
-      // Add task to project
-      const project = await projectModel.findById(req.body.project);
-      project?.tasks.push(task._id);
-      await project?.save();
-
       res.status(201).json(task);
     } catch (err: any) {
       res.status(400).send(err.message);
@@ -149,8 +143,9 @@ const taskHandlers = {
     try {
       const task = await taskModel.findById(req.params.id);
 
-      // Populate time logs
-      await task?.populate("timeLogs");
+      // Populate
+      await task?.populate("project");
+      await task?.populate("user");
 
       res.status(200).json(task);
     } catch (err: any) {
@@ -185,11 +180,6 @@ const timeLogHandlers = {
     try {
       const timeLog = await timeLogModel.create(req.body);
 
-      // Add time log to task
-      const task = await taskModel.findById(req.body.task);
-      task?.timeLogs.push(timeLog._id);
-      await task?.save();
-
       res.status(201).json(timeLog);
     } catch (err: any) {
       res.status(400).send(err.message);
@@ -207,6 +197,9 @@ const timeLogHandlers = {
   getTimeLogById: async (req: Request, res: Response) => {
     try {
       const timeLog = await timeLogModel.findById(req.params.id);
+
+      // Populate
+      await timeLog?.populate("task");
 
       res.status(200).json(timeLog);
     } catch (err: any) {

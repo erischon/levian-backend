@@ -15,12 +15,6 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  projects: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
-    },
-  ],
 });
 
 // Define a schema for a project
@@ -51,12 +45,6 @@ const ProjectSchema = new mongoose.Schema({
     required: true,
     enum: ["in_progress", "completed", "canceled"],
   },
-  tasks: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Task",
-    },
-  ],
 });
 
 // Define a schema for a task
@@ -88,12 +76,6 @@ const TaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  timeLogs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "TimeLog",
-    },
-  ],
 });
 
 // Define a schema for TimeLog
