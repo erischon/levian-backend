@@ -34,7 +34,7 @@ const ProjectSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  client: {
+  customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer",
     required: true,
