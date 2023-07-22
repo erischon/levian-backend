@@ -173,6 +173,17 @@ const taskHandlers = {
       res.status(400).send(err.message);
     }
   },
+  getTasksByProjectId: async (req: Request, res: Response) => {
+    try {
+      const tasks = await taskModel
+        .find({ project: req.params.id })
+        .populate("user");
+
+      res.status(200).json(tasks);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
 };
 
 const timeLogHandlers = {

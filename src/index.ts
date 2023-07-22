@@ -74,6 +74,7 @@ app.get("/api/tasks/:id", taskHandlers.getTaskById);
 app.post("/api/tasks", taskHandlers.createTask);
 app.put("/api/tasks/:id", taskHandlers.updateTask);
 app.delete("/api/tasks/:id", taskHandlers.deleteTask);
+app.get("/api/tasks/project/:id", taskHandlers.getTasksByProjectId);
 
 // Time Log routes
 app.get("/api/timelogs", timeLogHandlers.getTimeLogs);

@@ -42,7 +42,7 @@ const passportGoogle = () => {
 
         existingUser
           ? done(null, existingUser)
-          : new UserModel({ googleId: profile.id })
+          : new UserModel({ googleId: profile.id, name: profile.displayName })
               .save()
               .then((user) => done(null, user));
       }

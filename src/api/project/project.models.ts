@@ -33,6 +33,10 @@ const ProjectSchema = new mongoose.Schema({
     ref: "Customer",
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
