@@ -16,10 +16,10 @@ import {
   customerHandlers,
 } from "./api/project";
 
-const PORT: number = 3456;
-
 // Load environment variables
 dotenv.config();
+
+const PORT = process.env.PORT || 3456;
 
 // Create express app
 const app: Application = express();
