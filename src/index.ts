@@ -45,7 +45,10 @@ app.use(passport.initialize());
 // CORS configuration
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://levian-backend-ffde6465a95f.herokuapp.com",
+    ],
   })
 );
 
