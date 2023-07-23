@@ -48,6 +48,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://levian-backend-ffde6465a95f.herokuapp.com",
+      "https://levian-frontend.vercel.app",
     ],
   })
 );
