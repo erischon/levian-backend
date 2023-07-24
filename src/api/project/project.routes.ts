@@ -87,6 +87,7 @@ const projectHandlers = {
 
       // Populate
       await project?.populate("customer");
+      await project?.populate("user");
 
       res.status(200).json(project);
     } catch (err: any) {
