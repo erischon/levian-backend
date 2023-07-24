@@ -42,10 +42,10 @@ function authRoutes(app: Application) {
       }
 
       // Get user id
-      const userId = await UserModel.findOne({ providerId }).select("_id");
+      const loggedUser = await UserModel.findOne({ providerId });
 
       // Send response
-      res.status(200).json({ userId });
+      res.status(200).json({ loggedUser });
     } catch (error) {
       console.log(error);
     }
