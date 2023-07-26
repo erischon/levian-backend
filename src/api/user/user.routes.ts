@@ -8,11 +8,20 @@ function userRoutes(app: Application) {
     res.send(req.user);
   });
 
-  app.get("/api/user/:id", async (req, res) => {
+  app.get("/api/users/:id", async (req, res) => {
     try {
       const user = await UserModel.findOne({ providerId: req.params.id });
 
-      res.status(200).json(user);
+      const currentUser = {
+        id: user?._id,
+        name: user?.name,
+        email: user?.email,
+        image: user?.image,
+        providerId: user?.providerId,
+        provider: user?.provider,
+      };
+
+      res.status(200).json(currentUser);
     } catch (err: any) {
       res.status(400).send(err.message);
     }
