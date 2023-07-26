@@ -8,8 +8,9 @@ import {
   projectHandlers,
   taskHandlers,
   timeLogHandlers,
-  customerHandlers,
 } from "./project.routes";
+
+import { customerRoutes } from "./customer.routes";
 
 export {
   projectModel,
@@ -19,5 +20,5 @@ export {
   projectHandlers,
   taskHandlers,
   timeLogHandlers,
-  customerHandlers,
+  customerRoutes,
 };
