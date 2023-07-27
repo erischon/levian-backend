@@ -10,6 +10,7 @@ import {
   timeLogHandlers,
 } from "./project.routes";
 
+import { projectRoutes } from "./project.routes";
 import { customerRoutes } from "./customer.routes";
 
 export {
@@ -21,4 +22,5 @@ export {
   taskHandlers,
   timeLogHandlers,
   customerRoutes,
+  projectRoutes,
 };

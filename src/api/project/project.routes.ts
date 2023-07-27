@@ -9,12 +9,13 @@ const projectHandlers = {
 
       res.status(201).json(project);
     } catch (err: any) {
+      console.log("error", err.message);
       res.status(400).send(err.message);
     }
   },
   getProjects: async (req: Request, res: Response) => {
     try {
-      const projects = await projectModel.find();
+      const projects = await projectModel.find({ user: req.params.user });
 
       res.status(200).json(projects);
     } catch (err: any) {
@@ -23,7 +24,9 @@ const projectHandlers = {
   },
   getProjectById: async (req: Request, res: Response) => {
     try {
-      const project = await projectModel.findById(req.params.id);
+      const project = await projectModel.findById({
+        _id: req.params.id,
+      });
 
       // Populate
       await project?.populate("customer");
@@ -185,4 +188,12 @@ const timeLogHandlers = {
   },
 };
 
-export { projectHandlers, taskHandlers, timeLogHandlers };
+function projectRoutes(app: Application) {
+  app.get("/api/projects/:user", projectHandlers.getProjects);
+  app.get("/api/projects/project/:id", projectHandlers.getProjectById);
+  app.post("/api/projects", projectHandlers.createProject);
+  app.put("/api/projects/:id", projectHandlers.updateProject);
+  app.delete("/api/projects/:id", projectHandlers.deleteProject);
+}
+
+export { projectHandlers, taskHandlers, timeLogHandlers, projectRoutes };

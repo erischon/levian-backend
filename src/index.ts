@@ -5,7 +5,12 @@ import passport from "passport";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import { authRoutes, userRoutes, customerRoutes } from "./routes";
+import {
+  authRoutes,
+  userRoutes,
+  customerRoutes,
+  projectRoutes,
+} from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
 
@@ -53,13 +58,7 @@ passportGoogle(); // Register passport google strategy
 authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
 customerRoutes(app); // Register customer routes
-
-// Project routes
-app.get("/api/projects", projectHandlers.getProjects);
-app.get("/api/projects/:id", projectHandlers.getProjectById);
-app.post("/api/projects", projectHandlers.createProject);
-app.put("/api/projects/:id", projectHandlers.updateProject);
-app.delete("/api/projects/:id", projectHandlers.deleteProject);
+projectRoutes(app); // Register project routes
 
 // Task routes
 app.get("/api/tasks", taskHandlers.getTasks);
