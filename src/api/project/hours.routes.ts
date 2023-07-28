@@ -58,11 +58,25 @@ const hoursHandlers = {
       res.status(400).send(err.message);
     }
   },
+  getHoursByTaskId: async (req: Request, res: Response) => {
+    try {
+      const hours = await hoursModel
+        .find()
+        .where("task")
+        .equals(req.params.id)
+        .populate("task");
+
+      res.status(200).json(hours);
+    } catch (err: any) {
+      res.status(400).send(err.message);
+    }
+  },
 };
 
 function hoursRoutes(app: Application) {
   app.get("/api/hours", hoursHandlers.getHours);
   app.get("/api/hours/:id", hoursHandlers.getHoursById);
+  app.get("/api/hours/task/:id", hoursHandlers.getHoursByTaskId);
   app.post("/api/hours", hoursHandlers.createHours);
   app.put("/api/hours/:id", hoursHandlers.updateHours);
   app.delete("/api/hours/:id", hoursHandlers.deleteHours);
