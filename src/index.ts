@@ -10,11 +10,11 @@ import {
   userRoutes,
   customerRoutes,
   projectRoutes,
+  taskRoutes,
+  hoursRoutes,
 } from "./routes";
 import { passportGoogle } from "./api/auth";
 import { connectDB } from "./services";
-
-import { projectHandlers, taskHandlers, timeLogHandlers } from "./api/project";
 
 // Load environment variables
 dotenv.config();
@@ -59,21 +59,8 @@ authRoutes(app); // Register auth routes
 userRoutes(app); // Register user routes
 customerRoutes(app); // Register customer routes
 projectRoutes(app); // Register project routes
-
-// Task routes
-app.get("/api/tasks", taskHandlers.getTasks);
-app.get("/api/tasks/:id", taskHandlers.getTaskById);
-app.post("/api/tasks", taskHandlers.createTask);
-app.put("/api/tasks/:id", taskHandlers.updateTask);
-app.delete("/api/tasks/:id", taskHandlers.deleteTask);
-app.get("/api/tasks/project/:id", taskHandlers.getTasksByProjectId);
-
-// Time Log routes
-app.get("/api/timelogs", timeLogHandlers.getTimeLogs);
-app.get("/api/timelogs/:id", timeLogHandlers.getTimeLogById);
-app.post("/api/timelogs", timeLogHandlers.createTimeLog);
-app.put("/api/timelogs/:id", timeLogHandlers.updateTimeLog);
-app.delete("/api/timelogs/:id", timeLogHandlers.deleteTimeLog);
+taskRoutes(app); // Register task routes
+hoursRoutes(app); // Register hours routes
 
 // Launch app
 app.listen(PORT, () => {

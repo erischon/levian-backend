@@ -1,26 +1,22 @@
 import {
   projectModel,
   taskModel,
-  timeLogModel,
+  hoursModel,
   customerModel,
 } from "./project.models";
-import {
-  projectHandlers,
-  taskHandlers,
-  timeLogHandlers,
-} from "./project.routes";
 
 import { projectRoutes } from "./project.routes";
 import { customerRoutes } from "./customer.routes";
+import { hoursRoutes } from "./hours.routes";
+import { taskRoutes } from "./task.routes";
 
 export {
+  customerModel,
   projectModel,
   taskModel,
-  timeLogModel,
-  customerModel,
-  projectHandlers,
-  taskHandlers,
-  timeLogHandlers,
+  hoursModel,
   customerRoutes,
   projectRoutes,
+  taskRoutes,
+  hoursRoutes,
 };

@@ -79,32 +79,35 @@ const TaskSchema = new mongoose.Schema({
   project: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
+    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
 });
 
-// Define a schema for TimeLog
-const TimeLogSchema = new mongoose.Schema({
+// Define a schema for Hours
+const HoursSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
   },
-  duration: {
+  hours: {
     type: Number,
     required: true,
   },
   task: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Task",
+    required: true,
   },
 });
 
 const customerModel = mongoose.model("Customer", CustomerSchema);
 const projectModel = mongoose.model("Project", ProjectSchema);
 const taskModel = mongoose.model("Task", TaskSchema);
-const timeLogModel = mongoose.model("TimeLog", TimeLogSchema);
+const hoursModel = mongoose.model("Hours", HoursSchema);
 
-export { customerModel, projectModel, taskModel, timeLogModel };
+export { customerModel, projectModel, taskModel, hoursModel };
